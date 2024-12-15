@@ -17,39 +17,36 @@ from bqskit.passes.control.foreach import ForEachBlockPass
 # from bqskit.passes import PassGroup
 
 import random
+import asyncio
+
 from bqskit.ir import Circuit
 from bqskit.ir.gates import U3Gate, CXGate
 
-# 创建一个包含 5 个比特的电路
-num_qubits = 5
-circuit = Circuit(num_qubits)
-
-# 随机添加门到电路中
-for _ in range(10):  # 添加 10 个门
-    if random.choice([True, False]):
-        # 添加单比特门（U3Gate）
-        qubit = random.randint(0, num_qubits - 1)
-        params = [random.uniform(0, 2 * 3.1415) for _ in range(3)]
-        circuit.append_gate(U3Gate(), [qubit], params)
-    else:
-        # 添加双比特门（CXGate）
-        control = random.randint(0, num_qubits - 1)
-        target = random.randint(0, num_qubits - 1)
-        while target == control:
-            target = random.randint(0, num_qubits - 1)
-        circuit.append_gate(CXGate(), [control, target])
-
-
-
-
-
-dummy_compiler = Compiler()
 from pytest import MyFirstPass
 
+async def main():
+# 创建一个包含 5 个比特的电路
+# 创建一个简单的2比特电路
+    circuit = Circuit(2)
+    # 添加一个U3单比特门在qubit 0 上
+    circuit.append_gate(U3Gate(), (0,), [0.1, 0.2, 0.3])
+    # 添加一个CX二比特门在qubit 0和1上
+    # 注意这里使用tuple (0,1) 而非 [0,1]
+    circuit.append_gate(CXGate(), (0, 1))
 
-dummy_workflow = Workflow([
-    QuickPartitioner(3), 
 
-    UnfoldPass(),
-    MyFirstPass()
-])
+
+    dummy_compiler = Compiler()
+    from pytest import MyFirstPass
+
+
+    dummy_workflow = Workflow([
+        QuickPartitioner(3), 
+
+        UnfoldPass(),
+        MyFirstPass()
+    ])
+
+
+if __name__=="__main__":
+    asyncio.run(main())
