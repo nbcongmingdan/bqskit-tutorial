@@ -49,3 +49,4 @@ $ TUTORIAL\Scripts\activate
 (TUTORIAL) $ python -m pip install --upgrade pip
 (TUTORIAL) $ python -m pip install bqskit qiskit scipy jupyter openfermion
 ```
+某些又臭又长的项目。。。。。。唯一希望就是不要烂尾
