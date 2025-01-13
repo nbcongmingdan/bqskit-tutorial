@@ -33,7 +33,13 @@ async def main():
     # 添加一个CX二比特门在qubit 0和1上
     circuit.append_gate(CXGate(), (0, 1))
 
+    # 打印电路状态
+    print(f"Initial circuit: {circuit}")
 
+
+    # 示例异步操作
+    await asyncio.sleep(1)
+    print("Asynchronous operation completed.")
 
     dummy_compiler = Compiler()
     from pytest import MyFirstPass
@@ -48,4 +54,6 @@ async def main():
 
 
 if __name__=="__main__":
+     # 确认 main 是协程函数
+    print(f"main is a coroutine function: {asyncio.iscoroutinefunction(main)}")  # 应输出 True
     asyncio.run(main())
