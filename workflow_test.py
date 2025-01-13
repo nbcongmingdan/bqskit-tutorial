@@ -22,6 +22,17 @@ import asyncio
 from bqskit.ir import Circuit
 from bqskit.ir.gates import U3Gate, CXGate
 
+class MyFirstPass(BasePass):
+    def __init__(self):
+        super().__init__()
+
+    def run(self, circuit: Circuit, data: PassData) -> None:
+
+        #手动断点, hope it work
+        count = circuit.count(CXGate)
+        print(f"Number of CXGates: {count}")
+
+
 
 
 async def main():
@@ -42,8 +53,6 @@ async def main():
     print("Asynchronous operation completed.")
 
     dummy_compiler = Compiler()
-    from pytest import MyFirstPass
-
 
     dummy_workflow = Workflow([
         QuickPartitioner(3), 
