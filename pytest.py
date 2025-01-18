@@ -1,7 +1,10 @@
 import sys
 print(sys.executable)
 
-import pbd
+import pdb
+
+import bqskit
+
 
 from bqskit import Circuit
 from bqskit.ir.gates import U3Gate, CXGate
@@ -17,7 +20,7 @@ class MyFirstPass(BasePass):
         super().__init__()
 
     def run(self, circuit: Circuit, data: PassData) -> None:
-        pbd.set_trace()
+        pdb.set_trace()
         #手动断点, hope it work
         count = circuit.count(CXGate)
         print(f"Number of CXGates: {count}")
@@ -42,3 +45,9 @@ for _ in range(10):
         while target == control:
             target = random.randint(0, num_qubits - 1)
         circuit.append_gate(CXGate(), (control, target))  # 二比特门的location用(control,target)
+
+
+if __name__=="__main__":
+     # 确认 main 是协程函数
+    print(f"this is the pytest.py and is main")  # 应输出 True
+
